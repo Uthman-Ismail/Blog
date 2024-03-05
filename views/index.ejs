@@ -1,0 +1,21 @@
+<%- include("partials/header.ejs") %>
+<h2 class="home-word">Welcome to the Blog: Finding Inspiration in Everyday Moments</h2>
+<% if (locals.blogs) { %>
+    <ul id = "home">
+        <% blogs.forEach(blog => { %>
+            <li>
+                <form action="/view" method="GET">
+                    <a href="/view?id=<%= blog.id %>">
+                        <%= blog.title %>
+                        <span style="display:none;">
+                            <%= blog.id %>
+                            <button type="submit"></button>
+                        </span>
+                    </a>
+                </form>
+            </li>
+        <% }) %>
+    </ul>
+<% } %>
+
+<%- include("partials/footer.ejs") %>

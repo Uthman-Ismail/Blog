@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style/style.css" type="text/css">
+    <title>user</title>
+</head>
+<body>
+    <header>
+        <a id = "blog" href="/">Blog</a>
+        <ul class = "nav">
+            <form action="/logout" method="get">
+                <li><a class="btn" href="/">Logout<span style="display: none;"><button type="submit"></button></span></a></li>
+            </form>
+        </ul>
+    </header>
+    <h2 class="home-word">Welcome to the Blog: Finding Inspiration in Everyday Moments</h2>
+    <div id="user">
+        <div class="col">
+            <% if (locals.blogs) { %>
+                <ul>
+                    <% blogs.forEach(blog => { %>
+                        <li>
+                            <form action="/view" method="GET">
+                                <a href="/view?id=<%= blog.id %>">
+                                    <%= blog.title %>
+                                    <span style="display:none;">
+                                        <%= blog.id %>
+                                        <button type="submit"></button>
+                                    </span>
+                                </a>
+                            </form>
+                        </li>
+                    <% }) %>
+                </ul>
+            <% } %>
+        </div>
+        <div class="col">
+            <% if (locals.userBlogs) { %>
+                <form action="/create" method="get">
+                    <input type="hidden" name = "id" value=<%= logger %>>
+                    <button id="create" type="submit">Write A Blog</button>
+                </form>
+                <h3 style="font-family: 'Courier New', Courier, monospace; padding: 15px 0;">Your Blogs</h3>
+                <ul>
+                    <% userBlogs.forEach(userBlog => { %>
+                        <li class="userBlog">
+                            <form action="/view" method="GET">
+                                <a href="/view?id=<%= userBlog.id %>">
+                                    <%= userBlog.title %>
+                                    <span style="display:none;">
+                                        <%= userBlog.id %>
+                                        <button type="submit"></button>
+                                    </span>
+                                </a>
+                            </form>
+                            <form action="/update" method="get">
+                                <input type="hidden" name="id" value="<%= userBlog.id %>">
+                                <button type="submit">Update</button>
+                            </form>
+                            <form action="/delete" method="post">
+                                <input type="hidden" name="id" value="<%= userBlog.id %>">
+                                <button type="submit">Delete</button>
+                            </form>
+                        </li>
+                    <% }) %>
+                </ul>
+            <% } %>
+        </div>
+    </div>
+</body>
+</html>
